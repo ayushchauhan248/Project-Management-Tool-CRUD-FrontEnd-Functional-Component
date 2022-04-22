@@ -52,6 +52,7 @@ export const setprojectAction = (data) => async (dispatch) => {
     console.log(err);
   }
 };
+
 export const deleteProjectAction = (id) => async (dispatch) => {
   try {
     await axios.delete(`http://localhost:4000/api/projects/${id}`);
@@ -67,6 +68,7 @@ export const deleteProjectAction = (id) => async (dispatch) => {
 
 export const updateProject = (data) => async (dispatch) => {
   try {
+    console.log("Data in action", data);
     await axios.put(`http://localhost:4000/api/projects/${data.id}`, data);
     console.log(data);
     dispatch({

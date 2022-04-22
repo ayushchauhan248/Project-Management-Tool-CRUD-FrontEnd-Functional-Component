@@ -1,14 +1,6 @@
+import React, { memo } from "react";
 
-import React, { Component } from 'react';
-
-class NotFoundPage extends Component {
-    render() {
-        return (
-            <div className="">
-                page not found sorry !!!
-            </div>
-        );
-    }
-}
-
-export default NotFoundPage;
+const NotFoundPage = (props) => {
+  return <div className="">page not found sorry !!!</div>;
+};
+export default memo(NotFoundPage);

@@ -1,26 +1,22 @@
 import "./ProjectCard.css";
-import React, { Component } from "react";
-
-class ProjectCard extends Component {
-  render() {
-    return (
-      <div class="card">
-        <p class="card__exit">
-          <i class="fas fa-times">Title -</i>
-        </p>
-        <div class="card__icon">
-          <i class="fas fa-bolt">{this.props.title}</i>
-        </div>
-
-        <p class="card__exit">
-          <i class="fas fa-times">Technology -</i>
-        </p>
-        <div class="card__icon">
-          <i class="fas fa-bolt">{this.props.technology}</i>
-        </div>
+import React, { memo } from "react";
+const ProjectCard = (props) => {
+  return (
+    <div className="card">
+      <p className="card__exit">
+        <i className="fas fa-times">Title -</i>
+      </p>
+      <div className="card__icon">
+        <i className="fas fa-bolt">{props.title}</i>
       </div>
-    );
-  }
-}
 
-export default ProjectCard;
+      <p className="card__exit">
+        <i className="fas fa-times">Technology -</i>
+      </p>
+      <div className="card__icon">
+        <i className="fas fa-bolt">{props.technology}</i>
+      </div>
+    </div>
+  );
+};
+export default memo(ProjectCard);

@@ -1,45 +1,38 @@
-import { Component } from "react";
 import ProjectCard from "./ProjectCard";
 import "./AllCardSection.css";
-import { connect } from "react-redux";
 import {
   deleteProjectAction,
   getProjectAction,
 } from "../../redux/actions/project";
 import { Link } from "react-router-dom";
 import { BsPlusLg } from "react-icons/bs";
+import { memo } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-class AllCardSection extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      overlay: false,
-    };
-  }
+const AllCardSection = (props) => {
+  const projects = useSelector((state) => state.projectItems);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProjectAction());
+  }, []);
 
-  componentDidMount() {
-    this.props.getProjectAction();
-  }
-
-  handleDelete = (id) => {
-    this.props.deleteProjectAction(id);
+  const handleDelete = (id) => {
+    dispatch(deleteProjectAction(id));
     alert("Click OK to delete");
     window.location.reload();
   };
 
-  openOverLay = () => {
-    this.setState({ overlay: true });
-  };
-
-  render() {
-    console.log(this.state.overlay);
-    return (
-      <div id="allcard">
-        <div id="head">ALL PROJECTS </div>
-        <Link to="/create" className="create">
-          <BsPlusLg></BsPlusLg>
-        </Link>
-        {this.props.projects.projectData?.reverse().map((res) => {
+  return (
+    <div id="allcard">
+      <div id="head">ALL PROJECTS </div>
+      <Link to="/create" className="create">
+        <BsPlusLg></BsPlusLg>
+      </Link>
+      {projects?.projectData
+        ?.slice(0)
+        .reverse()
+        .map((res, i) => {
           return (
             <div id="proDiv">
               <ProjectCard
@@ -54,7 +47,7 @@ class AllCardSection extends Component {
                   <button className="btndash">Edit</button>
                 </Link>
                 <button
-                  onClick={() => this.handleDelete(res._id)}
+                  onClick={() => handleDelete(res._id)}
                   className="btndash linkClass"
                 >
                   Delete
@@ -63,16 +56,8 @@ class AllCardSection extends Component {
             </div>
           );
         })}
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  projects: state.projectItems,
-});
-
-export default connect(mapStateToProps, {
-  getProjectAction,
-  deleteProjectAction,
-})(AllCardSection);
+export default memo(AllCardSection);
